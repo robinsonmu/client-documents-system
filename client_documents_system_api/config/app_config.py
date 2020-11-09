@@ -9,7 +9,7 @@ load_dotenv()
 class Settings(BaseSettings):
     app_name: str = "Awesome API"
     admin_email: str
-    max_logging_attemps: int = 10
+    max_logging_attempts: int = 10
     algorithm: str
     secret_key: str
     access_token_expire_minutes: int

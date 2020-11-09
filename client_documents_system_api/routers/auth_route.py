@@ -1,21 +1,28 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, status
 from config.app_security import JwtManager
 from fastapi.security import OAuth2PasswordRequestForm
-from schemas.user import UserBase
+from schemas.user_schemas import UserBase
 from config.app_security import Token
 from datetime import datetime, timedelta
 from config.app_config import settings
+from db.database import SessionLocal
+from models import users_models
+
+
 router = APIRouter()
 
-fake_users_db = {
-    "johndoe": {
-        "username": "johndoe",
-        "full_name": "John Doe",
-        "email": "johndoe@example.com",
-        "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
-        "disabled": False,
-    }
-}
+# Dependency
+
+
+def get_db():
+    db = SessionLocal()
+    print(f"Dependency {db.query(user_models.User).filter(user_models.User.id == 1).first()}")
+
+    try:
+        return db
+    finally:
+        db.close()
+
 
 jwt_manager = JwtManager(settings.access_token_expire_minutes,
                          settings.secret_key,
@@ -24,7 +31,7 @@ jwt_manager = JwtManager(settings.access_token_expire_minutes,
 
 @router.post("/token", response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
-    user = jwt_manager.authenticate_user(fake_users_db, form_data.username, form_data.password)
+    user = jwt_manager.authenticate_user(get_db(), form_data.username, form_data.password)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

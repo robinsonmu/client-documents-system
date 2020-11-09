@@ -6,7 +6,8 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from pydantic import BaseModel
-from schemas.user import User, UserInDB
+from schemas.user_schemas import User, UserInDB
+from services import user_service
 
 
 class Token(BaseModel):
@@ -33,8 +34,10 @@ class JwtManager:
         return self.pwd_context.hash(password)
 
     def get_user(self, db, username: str):
-        if username in db:
-            user_dict = db[username]
+        print(f"P-> {username} {db}")
+        user_dict = user_service.get_user_by_email(db, username)
+        print(f"Resultado User by email-> {user_dict}")
+        if user_dict:
             return UserInDB(**user_dict)
 
     def authenticate_user(self, db, username: str, password: str):

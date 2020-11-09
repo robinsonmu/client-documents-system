@@ -1,17 +1,20 @@
 from db.database import Base
 from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, Enum
-from common import enums
 from sqlalchemy.orm import relationship
+from common import enums
 
 
 class FilesRequest(Base):
     __tablename__ = "files_request"
 
     id = Column(Integer, primary_key=True, index=True)
+    client_id = Column(Integer, ForeignKey("client.id"))
+
     state = Column("state", Enum(enums.FilesRequestStatus, nullable=False))
     comments = Column("comments", String(1000), nullable=False)
 
     required_documents = relationship("RequiredDocument", back_populates="owner_request")
+    client = relationship("Client", back_populates="files_requests")
 
 
 class RequiredDocument(Base):

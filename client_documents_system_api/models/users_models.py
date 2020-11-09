@@ -5,6 +5,7 @@ from sqlalchemy.orm import relationship
 
 class User(Base):
     __tablename__ = "user"
+
     id = Column(Integer, primary_key=True, index=True)
 
     email = Column(String, unique=True, index=True, nullable=False)
@@ -21,6 +22,7 @@ class Client(Base):
 
     address = Column(String, nullable=False)
     occupation = Column(String, default=None)
-
     user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
+
     user_data = relationship("User", uselist=False, back_populates="client_data")
+    files_requests = relationship("FilesRequest", back_populates="client")

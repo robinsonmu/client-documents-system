@@ -11,7 +11,7 @@ class UserCreate(UserBase):
 
 
 class User(UserBase):
-    username: str
+    username: Optional[str] = None
     email: Optional[str] = None
     full_name: Optional[str] = None
     disabled: Optional[bool] = None

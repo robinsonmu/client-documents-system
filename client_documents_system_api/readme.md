@@ -13,7 +13,7 @@ Steps:
     > pipenv install
 
 5.  Run the app
-    > pipenv run uvicorn main:app --reload
+    > pipenv run uvicorn main:app  --port 5000 --reload
 
     Or run the python file for debugging  
     > pipenv run python main.py
