@@ -6,7 +6,7 @@ Steps:
 
 1.  Install python 3.7
 2.  Install pipenv
-    > pip install pipenv
+    > pip install pipenv or pip3 install pipenv in mac
 3.  Run the following command in this directory to activate the virtual environtment
     > pipenv shell  
 4.  Install the dependencies

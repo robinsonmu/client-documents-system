@@ -2,7 +2,7 @@ import uvicorn
 from functools import lru_cache
 from fastapi import Depends, FastAPI
 from config import app_config
-from routers import auth_route
+from routers import auth_route, users_route
 from db.database import SessionLocal, engine
 from models import file_requests_models, users_models
 from sqlalchemy.orm import Session
@@ -33,6 +33,11 @@ app.include_router(
 
 )
 
+app.include_router(
+    users_route.router,
+    prefix="/users"
+)
+
 
 @lru_cache()
 def get_settings():
@@ -46,12 +51,6 @@ async def info(settings: app_config.Settings = Depends(get_settings), db: Sessio
         "admin_email": settings.admin_email,
         "max_logging_attempts": settings.max_logging_attempts,
     }
-
-
-@app.get("/users/", response_model=List[user_schemas.User])
-def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    users = user_service.get_users(db, skip=skip, limit=limit)
-    return users
 
 
 if __name__ == "__main__":
