@@ -11,6 +11,20 @@ def create_files_request(db: Session, files_request: files_request_schemas.Files
     db.add(db_request)
     db.commit()
     db.refresh(db_request)
+
+    # Link required documents
+    docs = files_request.required_documents
+    updated_docs = []
+    for doc in docs:
+        db_doc = file_requests_models.RequiredDocument(name=doc.name,
+                                                       description=doc.description,
+                                                       state=doc.state,
+                                                       files_request_id=db_request.id)
+        db.add(db_doc)
+        db.commit()
+        db.refresh(db_doc)
+        updated_docs.append(db_doc)
+
     return db_request
 
 

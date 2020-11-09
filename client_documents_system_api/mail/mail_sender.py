@@ -3,7 +3,7 @@ from config.app_config import settings
 from schemas import mail_schemas
 
 
-def confirmationHtml():
+def confirmation_html():
     html = """
                     <html> 
                     <body>
@@ -31,7 +31,7 @@ class MailSender():
         )
 
     async def send_confirmation_to_client(self, email_info: mail_schemas.RequestCreated):
-        html = confirmationHtml()
+        html = confirmation_html()
         message = MessageSchema(
             subject=email_info.dict().get("subject"),
             recipients=[email_info.dict().get("client_email"), ],

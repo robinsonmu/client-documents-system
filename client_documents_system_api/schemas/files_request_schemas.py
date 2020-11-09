@@ -3,22 +3,25 @@ from pydantic import BaseModel
 from common import enums
 
 
+class RequiredDocument(BaseModel):
+    name: str
+    description: str
+    state: enums.FilesRequestStatus = enums.FilesRequestStatus.not_reviewed
+    path: Optional[str] = None
+
+    files_request_id: Optional[int] = None
+
+    class Config:
+        orm_mode = True
+
 class FilesRequest(BaseModel):
     client_id: int
     state: Optional[enums.FilesRequestStatus] = enums.FilesRequestStatus.reviewed
     comments: Optional[str] = None
     description: str
 
-    class Config:
-        orm_mode = True
-
-
-class RequiredDocument(BaseModel):
-    path: str
-    name: str
-    description: str
-    status: enums.FilesRequestStatus = enums.FilesRequestStatus.not_reviewed
-    files_request_id: int
+    required_documents: List[RequiredDocument] = []
 
     class Config:
         orm_mode = True
+

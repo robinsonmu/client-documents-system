@@ -23,10 +23,10 @@ class RequiredDocument(Base):
 
     id = Column(Integer, primary_key=True, index=True)
 
-    path = Column("path", String(500), nullable=False)
+    path = Column("path", String(500), nullable=True)
     name = Column("name", String(200), nullable=False)
     description = Column("description", String(1000), nullable=False)
-    status = Column("status", Enum(enums.FilesRequestStatus), nullable=False)
+    state = Column("state", Enum(enums.FilesRequestStatus), nullable=False)
 
     files_request_id = Column("FilesRequest", ForeignKey("files_request.id"))
     owner_request = relationship("FilesRequest", back_populates="required_documents")
