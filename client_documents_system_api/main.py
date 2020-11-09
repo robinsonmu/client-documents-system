@@ -2,7 +2,7 @@ import uvicorn
 from functools import lru_cache
 from fastapi import Depends, FastAPI
 from config import app_config
-from routers import auth_route, users_route
+from routers import auth_route, users_route, files_request_route
 from db.database import SessionLocal, engine
 from models import file_requests_models, users_models
 from sqlalchemy.orm import Session
@@ -36,6 +36,11 @@ app.include_router(
 app.include_router(
     users_route.router,
     prefix="/users"
+)
+
+app.include_router(
+    files_request_route.router,
+    prefix="/requests"
 )
 
 

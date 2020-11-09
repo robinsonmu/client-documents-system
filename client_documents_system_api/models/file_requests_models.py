@@ -11,7 +11,8 @@ class FilesRequest(Base):
     client_id = Column(Integer, ForeignKey("client.id"))
 
     state = Column("state", Enum(enums.FilesRequestStatus, nullable=False))
-    comments = Column("comments", String(1000), nullable=False)
+    description = Column("description", String(1000), nullable=False)
+    comments = Column("comments", String(1000), nullable=True)
 
     required_documents = relationship("RequiredDocument", back_populates="owner_request")
     client = relationship("Client", back_populates="files_requests")

@@ -13,6 +13,11 @@ class Settings(BaseSettings):
     algorithm: str
     secret_key: str
     access_token_expire_minutes: int
+    system_username: str
+    system_mail_pw: str
+    system_mail: str
+    mail_server_port: int
+    mail_server: str
     origins = [
         "http://localhost",
         "http://localhost:8080",
