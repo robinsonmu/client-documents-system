@@ -47,12 +47,13 @@ export default {
           password: this.password,
         })
         .then(() => {
-          (this.username = ""),
-            (this.password = ""),
-            this.$router.push({ name: "home" });
+          this.username = "";
+          this.password = "";
+          this.$router.push({ name: "home" });
         })
         .catch(() => {
-          alert("Credenciales Incorrectas");
+          console.log(this.username + " " + this.password);
+          alert("Credenciales invalidas");
         });
     },
   },
@@ -158,6 +159,10 @@ export default {
   border: none;
   padding: 0.4rem 0;
   cursor: pointer;
+}
+
+.login-button:active {
+  opacity: 0.7;
 }
 
 #left-card {

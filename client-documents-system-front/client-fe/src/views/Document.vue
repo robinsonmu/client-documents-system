@@ -1,19 +1,20 @@
 <template>
-  <div class="home">
+  <div class="document">
     <Navbar />
-    <h1>Bienvenido al sistema de gestion de archivos</h1>
+    <DocumentComponent />
   </div>
 </template>
 
 <script>
 import Navbar from "@/components/Navbar.vue";
+import DocumentComponent from "@/components/DocumentComponent.vue";
 
 export default {
-  name: "Home",
+  name: "document",
   components: {
     Navbar,
+    DocumentComponent,
   },
 };
 </script>
-
 

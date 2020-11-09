@@ -57,6 +57,7 @@ const routes = [
     path: '/documents',
     name: 'documents',
     component: () => import('../views/Document.vue'),
+    beforeEnter: ifAuthenticated,
   }
 ]
 
