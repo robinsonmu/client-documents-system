@@ -1,9 +1,10 @@
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
 from config.app_config import settings
 from schemas import mail_schemas
+from typing import List
 
 
-def confirmation_html():
+def confirmation_html(docs: List[str] = None):
     html = """
                     <html> 
                     <body>
@@ -11,6 +12,8 @@ def confirmation_html():
                     <p>Hola se le solicita amablemente que ingrese a la plataforma de gestion de archivos 
                     de la inmobiliario y suba los archivos requeridos
                     <br>Gracias</p> 
+
+                    <inputRequiredDocs>
                     </body> 
                     </html>
             """
@@ -30,7 +33,7 @@ class MailSender():
             MAIL_SSL=False
         )
 
-    async def send_confirmation_to_client(self, email_info: mail_schemas.RequestCreated):
+    async def send_confirmation_to_client(self, email_info: mail_schemas.RequestCreated, required_docs: List[str]):
         html = confirmation_html()
         message = MessageSchema(
             subject=email_info.dict().get("subject"),

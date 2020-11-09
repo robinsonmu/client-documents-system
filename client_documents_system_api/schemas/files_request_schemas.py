@@ -1,6 +1,7 @@
 from typing import List, Optional
-from pydantic import BaseModel
+
 from common import enums
+from pydantic import BaseModel
 
 
 class RequiredDocument(BaseModel):
@@ -14,6 +15,7 @@ class RequiredDocument(BaseModel):
     class Config:
         orm_mode = True
 
+
 class FilesRequest(BaseModel):
     client_id: int
     state: Optional[enums.FilesRequestStatus] = enums.FilesRequestStatus.reviewed
@@ -24,4 +26,3 @@ class FilesRequest(BaseModel):
 
     class Config:
         orm_mode = True
-

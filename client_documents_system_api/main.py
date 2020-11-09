@@ -16,6 +16,8 @@ file_requests_models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 # Dependency
+app_settings = app_config.settings
+app_settings.add_cors_middleware(app)
 
 
 def get_db():
