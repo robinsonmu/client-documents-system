@@ -27,7 +27,7 @@ async def create_request(files_request: files_request_schemas.FilesRequest, db: 
     client = user_service.get_user(db, files_request.client_id)
     email_info = mail_schemas.RequestCreated(client_email=client.email, subject="Peticion de archivos")
 
-    # await mailer.send_confirmation_to_client(email_info)
+    await mailer.send_confirmation_to_client(email_info)
 
     return stored_request
 
