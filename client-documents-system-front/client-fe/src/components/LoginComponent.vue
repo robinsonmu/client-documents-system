@@ -9,7 +9,7 @@
       <div id="right-card">
         <div class="form">
           <h1>Bienvenido!</h1>
-          <form @submit.prevent>
+          <form @submit.prevent="login">
             <div>
               <input required v-model="username" type="text" />
               <label>Usuario</label>
@@ -18,7 +18,7 @@
               <input required v-model="password" type="password" />
               <label>Contraseña</label>
             </div>
-            <button class="login-button">Ingresar</button>
+            <button class="login-button" type="submit">Ingresar</button>
           </form>
         </div>
         <div class="info">
@@ -32,6 +32,30 @@
 <script>
 export default {
   name: "LoginComponent",
+  data() {
+    return {
+      username: "",
+      password: "",
+      incorrectCredentials: false,
+    };
+  },
+  methods: {
+    login() {
+      this.$store
+        .dispatch("authModule/login", {
+          username: this.username,
+          password: this.password,
+        })
+        .then(() => {
+          (this.username = ""),
+            (this.password = ""),
+            this.$router.push({ name: "home" });
+        })
+        .catch(() => {
+          alert("Credenciales Incorrectas");
+        });
+    },
+  },
 };
 </script>
 

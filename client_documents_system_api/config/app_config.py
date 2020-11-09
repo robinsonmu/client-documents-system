@@ -22,15 +22,17 @@ class Settings(BaseSettings):
         "http://localhost",
         "http://localhost:8080",
         "http://localhost:8000",
+        "http://localhost:8080/login"
     ]
 
     def add_cors_middleware(self, app):
         app.add_middleware(
             CORSMiddleware,
-            allow_origins=self.origins,
+            # allow_origins=['*'],
+            allow_origin_regex='http?://.*',
             allow_credentials=True,
-            allow_methods=["*"],
-            allow_headers=["*"],
+            allow_methods=['*'],
+            allow_headers=['*'],
         )
 
 
