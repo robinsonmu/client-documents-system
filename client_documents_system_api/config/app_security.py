@@ -34,11 +34,9 @@ class JwtManager:
         return self.pwd_context.hash(password)
 
     def get_user(self, db, username: str):
-        print(f"P-> {username} {db}")
         user_dict = user_service.get_user_by_email(db, username)
-        print(f"Resultado User by email-> {user_dict}")
         if user_dict:
-            return UserInDB(**user_dict)
+            return UserInDB.from_orm(user_dict)
 
     def authenticate_user(self, db, username: str, password: str):
         user = self.get_user(db, username)
@@ -55,6 +53,7 @@ class JwtManager:
             expire = datetime.utcnow() + expires_delta
         else:
             expire = datetime.utcnow() + timedelta(minutes=15)
+
         to_encode.update({"exp": expire})
         encoded_jwt = jwt.encode(to_encode, self.secret_key, algorithm=self.algorithm)
         return encoded_jwt

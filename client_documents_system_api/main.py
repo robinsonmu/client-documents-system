@@ -48,5 +48,11 @@ async def info(settings: app_config.Settings = Depends(get_settings), db: Sessio
     }
 
 
+@app.get("/users/", response_model=List[user_schemas.User])
+def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    users = user_service.get_users(db, skip=skip, limit=limit)
+    return users
+
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=5000, debug=True)

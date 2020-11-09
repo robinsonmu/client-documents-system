@@ -16,8 +16,6 @@ router = APIRouter()
 
 def get_db():
     db = SessionLocal()
-    print(f"Dependency {db.query(user_models.User).filter(user_models.User.id == 1).first()}")
-
     try:
         return db
     finally:
@@ -39,5 +37,5 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
             headers={"WWW-Authenticate": "Bearer"},
         )
     access_token = jwt_manager.create_access_token(
-        data={"sub": user.username})
+        data={"sub": user.email})
     return {"access_token": access_token, "token_type": "bearer"}

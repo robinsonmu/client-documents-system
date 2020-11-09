@@ -10,7 +10,6 @@ def get_user(db: Session, user_id: int):
 def get_user_by_email(db: Session, email: str):
     results = db.query(users_models.User).filter(users_models.User.email == email)
     user = results.first()
-    print(f"Session db {db} {email} \n R> {results}")
     return user
 
 
